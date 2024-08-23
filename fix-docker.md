@@ -23,7 +23,7 @@ pytest tests/1_env/docker_manager_test.py
 
 ## The following is a temporary solution ("eliminating symptoms" but does not address the cause)
 
-Use cautiously!!!
+Use cautiously!!! The following actions cannot be undone.
 
 ``` bash
 # stop all containers
