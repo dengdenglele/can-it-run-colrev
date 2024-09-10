@@ -1,3 +1,11 @@
+- issues with "docker run hello-world"
+  - this prevents pytest to run correctly
+
+- "docker ps -a" gets clumped up
+  - also due to pytest
+  - python with tag 3.9 and image ID deb23f81edc8
+
+
 # "pytest tests/1_env/docker_manager_test.py" fails
 
 The "docker_manager_test.py" file is causing issues and should be rewritten/corrected
