@@ -1,14 +1,7 @@
-- issues with "docker run hello-world"
-  - this prevents pytest to run correctly
-
-- "docker ps -a" gets clumped up
-  - also due to pytest
-  - python with tag 3.9 and image ID deb23f81edc8
-
-
-# "pytest tests/1_env/docker_manager_test.py" fails
-
-The "docker_manager_test.py" file is causing issues and should be rewritten/corrected
+# Issue 1: "docker run hello-world" breaks pytest
+- this prevents pytest to run correctly
+- "pytest tests/1_env/docker_manager_test.py" fails
+- The "docker_manager_test.py" file is causing issues and should be rewritten/corrected
 
 ## Issue
 
@@ -48,3 +41,39 @@ docker rmi -f $(docker images -q)
 # inside colrev directory (with venv) run
 pytest tests/1_env/docker_manager_test.py 
 ```
+
+## fix the issue gracefully
+
+``` bash
+docker ps -a
+docker rm <id of hello-world container> 
+# there might be multiple container of hello-world
+# all of them must be deleted, before pytest can run successfully
+```   
+
+```bash
+# each time 
+docker run hello-world
+# ... was executed, a new container will be created!
+# all hello-world container must be deleted
+# list all hello-world containers
+docker ps -a -q --filter "ancestor=hello-world"
+# delete all hello-world containers
+docker rm $(docker ps -a -q --filter "ancestor=hello-world")
+```
+
+# Issue 2: "docker ps -a" gets clumped up
+- also due to pytest
+- each time pytest after a pytest run, a new container for will be created (deb23f81edc8)
+- python with tag 3.9 and image ID deb23f81edc8
+- what is docker repository "Python 3.9" used for?
+
+``` bash
+# how to cleanup
+docker rm $(docker ps -a -q --filter "ancestor=deb23f81edc8")
+# delete the python 3.9 image
+docker rmi <image-id>
+``` 
+
+
+
