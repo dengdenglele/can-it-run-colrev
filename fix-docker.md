@@ -72,7 +72,7 @@ docker rm $(docker ps -a -q --filter "ancestor=hello-world")
 # how to cleanup
 docker rm $(docker ps -a -q --filter "ancestor=deb23f81edc8")
 # delete the python 3.9 image
-docker rmi <image-id>
+docker rmi <image-id> 
 ``` 
 
 
